@@ -1,4 +1,4 @@
-from __future__ import annotations
+__future__ import annotations
 
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -210,7 +210,7 @@ def location_picker(
         current = {"lat": default_lat, "lon": default_lon, "label": default_label}
         st.session_state[state_key] = current
 
-    map_view = folium.Map(location=[current["lat"], current["lon"]], zoom_start=13, tiles="CartoDB positron")
+    map_view = folium.Map(location=[current["lat"], current["lon"]], zoom_start=13, tiles="OpenStreetMap")
     folium.Marker(
         [current["lat"], current["lon"]],
         tooltip=current.get("label", title),
@@ -719,7 +719,7 @@ def hazard_map_page(db: HazardDatabase) -> None:
         import folium
 
         heat_center = [filtered[0]["latitude"], filtered[0]["longitude"]]
-        danger_map = folium.Map(location=heat_center, zoom_start=12, tiles="CartoDB dark_matter")
+        danger_map = folium.Map(location=heat_center, zoom_start=12, tiles="OpenStreetMap")
         HeatMap([[row["latitude"], row["longitude"]] for row in filtered]).add_to(danger_map)
         st.markdown("### Danger Zone Heatmap")
         st.components.v1.html(danger_map._repr_html_(), height=520, scrolling=True)
@@ -821,7 +821,7 @@ def route_safety_page(db: HazardDatabase) -> None:
 def create_route_map(source_lat: float, source_lon: float, destination_lat: float, destination_lon: float, reports: list[dict]) -> str:
     import folium
 
-    m = folium.Map(location=[source_lat, source_lon], zoom_start=12, tiles="CartoDB dark_matter")
+    m = folium.Map(location=[source_lat, source_lon], zoom_start=12, tiles="OpenStreetMap")
     folium.Marker([source_lat, source_lon], tooltip="Source", icon=folium.Icon(color="green")).add_to(m)
     folium.Marker([destination_lat, destination_lon], tooltip="Destination", icon=folium.Icon(color="red")).add_to(m)
     folium.PolyLine([(source_lat, source_lon), (destination_lat, destination_lon)], color="#60a5fa", weight=4, opacity=0.8).add_to(m)
