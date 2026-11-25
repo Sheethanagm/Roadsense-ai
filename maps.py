@@ -59,7 +59,7 @@ def build_map_html(records: Iterable[dict], latitude: float, longitude: float) -
     if records:
         center = [float(records[0].get("latitude", latitude)), float(records[0].get("longitude", longitude))]
 
-    hazard_map = folium.Map(location=center, zoom_start=13, tiles="CartoDB dark_matter")
+    hazard_map = folium.Map(location=center, zoom_start=13, tiles="OpenStreetMap")
     folium.TileLayer("OpenStreetMap").add_to(hazard_map)
 
     for record in records:
@@ -73,3 +73,5 @@ def build_map_html(records: Iterable[dict], latitude: float, longitude: float) -
         marker.add_to(hazard_map)
 
     return hazard_map._repr_html_()
+
+
